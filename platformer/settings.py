@@ -33,7 +33,8 @@ else:
   SECRET_KEY = str(os.getenv('SECRET_KEY'))
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = ENV == 'ENV'
+# DEBUG = ENV == 'ENV'
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -51,6 +52,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'games',
     'reviews',
+    'jwt_auth',
 ]
 
 MIDDLEWARE = [
