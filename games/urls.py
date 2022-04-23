@@ -3,8 +3,8 @@ from .views import *
 
 urlpatterns = [
 
-  #Generic views for games
-  path('games/', GameList.as_view()),
+    # Generic views for games
+    path('games/', GameList.as_view()),
 
 
 
@@ -24,6 +24,8 @@ urlpatterns = [
     # Class-based views for developers
     path('developers/', DeveloperListCreate.as_view()),
     path('developers/<int:pk>/', DeveloperRetrieveUpdateDelete.as_view()),
+
+    path('games/search/', GameSearch.as_view()),
 
 
 ]

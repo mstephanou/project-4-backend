@@ -17,6 +17,8 @@ from .serializers.common import *
 # GENERIC GAME VIEWS AUTOMATES MOST OF THE API ENDPOINT FUNCTIONAILITY FOR ME
 
 # List Games generic view
+
+
 class GameList(ListCreateAPIView):
 
     # This will query will handle all games
@@ -50,34 +52,34 @@ class GameDetail(RetrieveAPIView):
 # More basic, fine-grain control of the API endpoint
 
 class DeveloperListCreate(APIView):
-  #List Developers
-  def get(self, request):
-    # Load all developers from the database
-    developers = Developer.objects.all()
+    # List Developers
+    def get(self, request):
+        # Load all developers from the database
+        developers = Developer.objects.all()
 
-  # Serialize the developers to JSON by using a DeveloperSerializer with the many=true flag
-    serialized_developers = PopulatedDeveloperSerializer(developers, many=True)
-  # Return the serialized developers with a HTTP 200
-    return Response(data=serialized_developers.data, status=status.HTTP_200_OK)
+    # Serialize the developers to JSON by using a DeveloperSerializer with the many=true flag
+        serialized_developers = PopulatedDeveloperSerializer(
+            developers, many=True)
+    # Return the serialized developers with a HTTP 200
+        return Response(data=serialized_developers.data, status=status.HTTP_200_OK)
 
-  # Create Developer
+    # Create Developer
 
-  def post(self, request):
-    # Create a new serializer with the incoming new developer request data
-    developer_serializer = DeveloperSerializer(data=request.data)
+    def post(self, request):
+        # Create a new serializer with the incoming new developer request data
+        developer_serializer = DeveloperSerializer(data=request.data)
 
-    # Check whether the new developer is valid
-    if developer_serializer.is_valid():
+        # Check whether the new developer is valid
+        if developer_serializer.is_valid():
 
-      # New developer is valid so save it to the database
-      developer_serializer.save()
+            # New developer is valid so save it to the database
+            developer_serializer.save()
 
-      #Saved data returns 200 response and the new developer record
-      return Response(data=developer_serializer.data, status=status.HTTP_200_OK)
+            # Saved data returns 200 response and the new developer record
+            return Response(data=developer_serializer.data, status=status.HTTP_200_OK)
 
-    # Incoming update is not valid so return a http 400 bad request
-    return Response(data=developer_serializer.data, status=status.HTTP_400_BAD_REQUEST)
-
+        # Incoming update is not valid so return a http 400 bad request
+        return Response(data=developer_serializer.data, status=status.HTTP_400_BAD_REQUEST)
 
 
 # Developer retrieve, update and delete class-based view
@@ -104,7 +106,8 @@ class DeveloperRetrieveUpdateDelete(APIView):
 
         # Create a new serializer with the current developer data and apply the changes from the incoming request data (updated developer)
         # We specify the key `data` because we aren't adhering to the order of the arguments, same as `pk=pk` and `many=True`
-        updated_developer = DeveloperSerializer(developer_to_update, data=request.data)
+        updated_developer = DeveloperSerializer(
+            developer_to_update, data=request.data)
 
         # Check whether the updates are valid
         if updated_developer.is_valid():
@@ -153,3 +156,18 @@ class DeveloperRetrieveUpdateDelete(APIView):
             # Raising an exception is when you're indicating a specific behaviour or outcome like NotFound
             # Returning an exception is for something generic like Response above
             raise NotFound(detail="Can't find that developer")
+
+
+class GameSearch(APIView):
+
+    def get(self, request):
+
+        # Get search value from querystring, i.e. http://mydomain.com/search?book_title=The Stand
+        game_title_search = request.GET.get("game_title")
+
+        # Query the database with a filter using {fieldname}__icontains which does a case-insensitive search
+        games = Game.objects.filter(title__icontains=game_title_search)
+
+        serialized_games = PopulatedGameSerializer(games, many=True)
+
+        return Response(data=serialized_games.data, status=status.HTTP_200_OK)

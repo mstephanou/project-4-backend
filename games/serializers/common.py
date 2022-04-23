@@ -14,6 +14,16 @@ class GameSerializer(serializers.ModelSerializer):
         fields = ('__all__')
 
 
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+
+        # The class type i want to serialize
+        model = Category
+
+        # Which fields to serialize to JSON. __all__ means all fields
+        fields = ('__all__')
+
+
 # the class used to control how a Developer is serialized to JSON. Derives/inherits from the default ModelSerializer
 class DeveloperSerializer(serializers.ModelSerializer):
     class Meta:
@@ -43,6 +53,8 @@ class PopulatedGameSerializer(GameSerializer):
     genres = GenreSerializer(many=True)
 
     reviews = PopulatedReviewSerializer(many=True)
+
+    categories = CategorySerializer(many=True)
 
 
 class GameWithGenresSerializer(GameSerializer):

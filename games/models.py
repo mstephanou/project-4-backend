@@ -22,6 +22,15 @@ class Genre(models.Model):
         return self.title
 
 
+class Category(models.Model):
+    # Text field with a maximum length, validation is automatically handled
+    name = models.CharField(max_length=30)
+
+    # Function that defines how i want the Genre model to look in the admin area of Django, when converting the object into a string.
+    def __str__(self):
+        return self.name
+
+
 # Define a Game model, Django will se the db up for me
 class Game(models.Model):
   # Text field with a maximum length, validation is automatically handled
@@ -45,5 +54,5 @@ class Game(models.Model):
     # related_name value allows me to customise what the relationship looks like from the Genre perspective (i.e. a genre has 'games')
     # blank=True allows empty values to be set (a game doesn't need to have a genre)
     genres = models.ManyToManyField(Genre, related_name='games', blank=True)
-    
-    tags = models.CharField(max_length=30, null=True)
+    categories = models.ManyToManyField(
+        Category, related_name='games', blank=True)
