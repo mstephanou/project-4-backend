@@ -54,5 +54,6 @@ class Game(models.Model):
     # related_name value allows me to customise what the relationship looks like from the Genre perspective (i.e. a genre has 'games')
     # blank=True allows empty values to be set (a game doesn't need to have a genre)
     genres = models.ManyToManyField(Genre, related_name='games', blank=True)
+
     categories = models.ManyToManyField(
         Category, related_name='games', blank=True)
