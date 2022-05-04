@@ -181,4 +181,4 @@ AUTH_USER_MODEL = 'jwt_auth.CustomUser'
 
 django_on_heroku.settings(locals())
 
-CSRF_TRUSTED_ORIGINS = ['https://platformer.herokuapp.com']
+CSRF_TRUSTED_ORIGINS = ['https://msplatformer.herokuapp.com']
