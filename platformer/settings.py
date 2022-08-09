@@ -28,9 +28,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 if ENV == 'DEV':
-  SECRET_KEY = 'django-insecure-x7$x6c6(w@!o72ld%qbf#r897-xo%gjp%^-cn7(8#(o8(1mm0)'
+    SECRET_KEY = 'django-insecure-x7$x6c6(w@!o72ld%qbf#r897-xo%gjp%^-cn7(8#(o8(1mm0)'
 else:
-  SECRET_KEY = str(os.getenv('SECRET_KEY'))
+    SECRET_KEY = str(os.getenv('SECRET_KEY'))
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = ENV == 'ENV'
@@ -66,7 +66,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-CORS_ALLOW_ALL_ORIGINS=True
+CORS_ALLOW_ALL_ORIGINS = True
 
 ROOT_URLCONF = 'platformer.urls'
 
@@ -94,19 +94,19 @@ WSGI_APPLICATION = 'platformer.wsgi.application'
 
 DATABASES = {}
 if ENV != 'DEV':
-  DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)	
+    DATABASES['default'] = dj_database_url.config(
+        conn_max_age=600, ssl_require=True)
 else:
-  DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'USER': '',
-        'PASSWORD': '',
-        'NAME': 'platformer',
-        'HOST': 'localhost',
-        'PORT': 5432,
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'USER': '',
+            'PASSWORD': '',
+            'NAME': 'platformer',
+            'HOST': 'localhost',
+            'PORT': 5432,
+        }
     }
-}
-
 
 
 # DATABASES = {}
