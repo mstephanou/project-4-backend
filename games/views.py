@@ -1,6 +1,7 @@
 from django.shortcuts import render
 # status gives me a list of possible response codes
 from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, RetrieveAPIView
 # This imports rest_frameworks APIView that i will use to extend my custom view
 from rest_framework.views import APIView
@@ -20,6 +21,9 @@ from .serializers.common import *
 
 
 class GameList(ListCreateAPIView):
+
+    #permission_classes = [IsAuthenticated, ]
+    
 
     # This will query will handle all games
     queryset = Game.objects.all()
